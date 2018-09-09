@@ -4,7 +4,7 @@ package com.vadim.lopatka.dataStructures.bag;
  *
  * @param <T>
  */
-public interface Bag<T> extends Iterable<T> {
+public interface Bag<T> {
     /**
      * insert item in the Bag
      *

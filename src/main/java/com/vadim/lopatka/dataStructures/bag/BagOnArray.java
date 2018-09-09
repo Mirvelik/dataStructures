@@ -14,9 +14,8 @@ public class BagOnArray<T> implements Bag<T> {
 
     @Override
     public void add(T item) {
-        if (size == store.length) {
+        if (size == store.length)
             store = expandStore();
-        }
 
         store[size] = item;
         size++;
@@ -24,23 +23,31 @@ public class BagOnArray<T> implements Bag<T> {
 
     private Object[] expandStore() {
         Object[] biggerStore = new Object[store.length * 2];
-        return copyFirstToSecond(store, biggerStore);
+        return copyArrays(store, biggerStore);
     }
 
-    private Object[] copyFirstToSecond(Object[] first, Object[] second) {
-        for (int i = 0; i < first.length; i++)
-            second[i] = first[i];
+    private Object[] copyArrays(Object[] from, Object[] to) {
+        for (int i = 0; i < from.length; i++)
+            to[i] = from[i];
 
-        return second;
+        return to;
     }
 
     @Override
     public void clear() {
-
+        store = new Object[defaultSize];
+        size = 0;
     }
 
     @Override
     public boolean contains(T item) {
+        if (item != null) {
+            for (Object storeElement : store) {
+                if (storeElement.equals(item))
+                    return true;
+            }
+        }
+
         return false;
     }
 
@@ -51,27 +58,50 @@ public class BagOnArray<T> implements Bag<T> {
 
     @Override
     public int distinctSize() {
-        return 0;
+        int count = 0;
+        for (int i = 0; i < store.length - 1; i++) {
+            for (int j = i + 1; j < store.length && store[i] != store[j]; j++) {
+                if (j == store.length - 1) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 
     @Override
     public int elementSize(T item) {
-        return 0;
+        int count = 0;
+        for (int i = 0; i < size; i++)
+            if (store[i].equals(item))
+                count++;
+
+        return count;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
     public boolean remove(T item) {
-        return false;
-    }
+        for (int i = 0; i < size; i++) {
+            if (item.equals(store[i])) {
+                for (int j = i; j <size; j++) {
+                    if (store[j + 1] != null) {
+                        store[j] = store[j + 1];
+                    }
+                }
+                size--;
 
-    @Override
-    public Iterator<T> iterator() {
-        return null;
+                store[size] = null; //fix last
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
