@@ -59,6 +59,7 @@ public class BagOnArray<T> implements Bag<T> {
     @Override
     public int distinctSize() {
         int count = 0;
+
         for (int i = 0; i < store.length - 1; i++) {
             for (int j = i + 1; j < store.length && store[i] != store[j]; j++) {
                 if (j == store.length - 1) {
