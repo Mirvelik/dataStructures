@@ -12,11 +12,11 @@ public class BagOnArrayTest {
     private final static String BE = "be";
     private final static String OR = "or";
     private final static String NOT = "not";
-    private BagOnArray<String> bag;
+    private Bag<String> bag;
 
     @Before
     public void setUp() throws Exception {
-        bag = new BagOnArray<>();
+        bag = new BagOnLinks<>();
         bag.add(TO);
         bag.add(BE);
         bag.add(OR);

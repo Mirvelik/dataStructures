@@ -10,22 +10,41 @@ public class BagOnLinks<T> implements Bag<T> {
 
     @Override
     public void add(T item) {
-
+        if (size > 0) {
+            Node<T> node = new Node<>(last, item, null);
+            last.next=node;
+            last = node;
+        } else {
+            Node<T> node = new Node<>(null, item, null);
+            first = node;
+            last = node;
+        }
+        size++;
     }
 
     @Override
     public void clear() {
-
+        first=null;
+        last=null;
+        size=0;
     }
 
     @Override
     public boolean contains(T item) {
+        if (size > 0) {
+            Node<T> buffer = first;
+            do {
+                if(buffer.item.equals(item))
+                    return true;
+
+            } while ()
+        }
         return false;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
@@ -52,5 +71,11 @@ public class BagOnLinks<T> implements Bag<T> {
         T item;
         Node<T> next;
         Node<T> prev;
+
+        public Node( Node<T> prev, T item, Node<T> next) {
+            this.prev = prev;
+            this.item = item;
+            this.next = next;
+        }
     }
 }
